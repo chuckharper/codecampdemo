@@ -1,0 +1,12 @@
+<ul id="serverMessage" />
+
+<script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    var socket = io.connect('http://codecampdemo.tstrimple.c9.io/');
+    socket.on('hello', function (data) {
+        console.log(data);
+        $('#serverMessage').prepend('<li>' + data.message + '</li>');
+        socket.emit('hello', 'Hello from the client!');
+    });
+</script>
