@@ -1,0 +1,38 @@
+<div id="cursors"></div>
+
+<ul id="messages"></ul>
+
+<input id="message" type="text" />
+<input id="send-message" type="submit" value="Send">
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    var nickname = '';
+    var socket = io.connect('http://codecampdemo.tstrimple.c9.io/');
+    socket.on('message', function (data) {
+        $('#messages').append('<li>' + data + '</li>');
+    });
+    
+    socket.on('mouse-location', function(data) {
+        if(!$('#' + data.id).length) {
+            $('#cursors').append('<div id="' + data.id + '" style="position: absolute;">A</div>');
+        }
+        
+        $('#' + data.id).css('left', data.x);
+        $('#' + data.id).css('top', data.y);
+    });
+    
+    $('#send-message').click(function() {
+        var message = $('#message').val();
+        if(message.length > 0) {
+            $('#messages').append('<li>' + message + '</li>');
+            socket.emit('message', message);
+            $('#message').val('');
+        }
+    });
+    
+    $(document).mousemove(function(e) {
+        socket.emit('mouse-location', { x: e.pageX, y: e.pageY });
+    });
+</script>
