@@ -1,15 +1,39 @@
+/**
+    Include the socket.io module.
+ **/
+var http = require('http'),
+    fs = require('fs'),
+    io = require('socket.io');
 
-
-var app = require('express').createServer();
-var io = require('socket.io').listen(app);
 io.set('log level', 0);
 
-app.listen(process.env.C9_PORT);
+var listenPort = process.env.PORT || 3030;
 
-app.get('/', function (req, res) {
-    console.log('served static file ' + __dirname + '/index.html');
-    res.sendfile(__dirname + '/index.html');
-});
+http.createServer(function (req, res) {
+	if(req.url == '/') {
+        fs.readFile(__dirname + '/index.html', 'UTF8', function(err, content) {
+            if(err) {
+                console.log(err);
+    	        res.writeHead(500);
+		        res.end("Error: " + err);
+                return;
+            }
+            
+            console.log(content);
+            res.end(content);
+        });
+	} else {
+        res.writeHead(404);
+		res.end("File Not Found!");
+	}
+}).listen(listenPort);
+
+console.log('Listening on port: ' + listenPort)
+
+/**
+	Bind the socket.io module to the http server to proxy requests.
+**/
+io.listen(http);
 
 io.sockets.on('connection', function (socket) {
     console.log('Client connected!');

@@ -1,0 +1,15 @@
+info it worked if it ends with ok
+verbose cli [ 'node', '/usr/local/bin/npm', 'install', 'socket.io' ]
+info using npm@1.1.0-3
+info using node@v0.6.9
+verbose config file /Users/tstrimple/.npmrc
+verbose config file /usr/local/etc/npmrc
+verbose config file /usr/local/lib/node_modules/npm/npmrc
+verbose caching /Users/tstrimple/Code/codecampdemo/package.json
+verbose loadDefaults codecampdemo@0.0.1
+verbose from cache /Users/tstrimple/Code/codecampdemo/package.json
+verbose cache add [ 'socket.io', null ]
+silly cache add: name, spec, args [ undefined, 'socket.io', [ 'socket.io', null ] ]
+verbose parsed url { pathname: 'socket.io', path: 'socket.io', href: 'socket.io' }
+verbose addNamed [ 'socket.io', '' ]
+verbose addNamed [ null, '' ]
