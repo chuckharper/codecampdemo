@@ -19,13 +19,11 @@ var listenPort = process.env.C9_PORT || 3030;
 **/	
 http.createServer(function (req, res) {
 	if(req.url == '/') {
-		res.writeHead(200, {'Content-Type': 'text/plain'});
 		res.end('Hello World\n');
 	} else {
 		res.writeHead(404);
 		res.end("File Not Found!");
 	}
-
 }).listen(listenPort);
 
 console.log('Listening on port ' + listenPort);

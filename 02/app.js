@@ -1,17 +1,20 @@
-/**
-	We're using the express server instead of the built in node.js http server.
-**/
-var app = require('express').createServer();
+
+var http = require('http'),
+	fs = require('fs');
 
 var listenPort = process.env.C9_PORT || 3030;
 
-/**
-	
-**/
-app.get('/', function(req, res){
-  res.send('Hello World\n');
-});
+http.createServer(function (req, res) {
+	if(req.url == '/') {
+		/**
+			Send the contents of index.html instead of hard coding the response.
+		**/
+		res.end(fs.readFileSync('index.html'));
+	} else {
+		res.writeHead(404);
+		res.end("File Not Found!");
+	}
 
-app.listen(listenPort);
+}).listen(listenPort);
 
 console.log('Listening on port ' + listenPort);
