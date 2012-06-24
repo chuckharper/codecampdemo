@@ -1,0 +1,17 @@
+
+<ul data-bind="foreach: messages">
+	<li data-bind="text: $data"></li>
+</li>
+
+<script src="http://knockoutjs.com/js/knockout-2.1.0.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+	var model = { messages: ko.observableArray() };
+	ko.applyBindings(model);
+
+    var socket = io.connect();
+    socket.on('message', function (data) {
+    	model.messages.push(data);
+        socket.emit('message', 'Hello from the client!');
+    });
+</script>
